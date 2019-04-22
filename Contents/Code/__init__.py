@@ -48,7 +48,7 @@ def Start():
 
 ####################################################################################################
 @handler(PREFIX, NAME)
-def MainMenu():
+def MainMenu(*args, **kwargs):
 
     if Prefs['search'] or Prefs['m3u_manual_reload'] or Prefs['xmltv_manual_reload'] or Prefs['preferences']:
         oc = ObjectContainer()
