@@ -35,7 +35,7 @@ def Start():
     VideoClipObject.art = R('art-default.jpg')
 
     SetAvailableLanguages({'en', 'fr', 'ru'})
-    
+
     # in case something went wrong last run (#122)
     Dict['playlist_loading_in_progress'] = False
     Dict['guide_loading_in_progress'] = False
@@ -97,7 +97,7 @@ def MainMenu(*args, **kwargs):
 
 ####################################################################################################
 @route(PREFIX + '/listgroups', page = int)
-def ListGroups(page = 1):
+def ListGroups(page = 1, **kwargs):
 
     if not Dict['groups']:
         LoadPlaylist()
@@ -155,7 +155,7 @@ def ListGroups(page = 1):
 
 ####################################################################################################
 @route(PREFIX + '/listitems', page = int)
-def ListItems(group = unicode('All'), query = '', page = 1):
+def ListItems(group = unicode('All'), query = '', page = 1, **kwargs):
 
     if not Dict['streams']:
         LoadPlaylist()
@@ -301,16 +301,25 @@ def CreateVideoClipObject(url, title, thumb, art, summary,
                 #platforms
                 #bitrate
                 #aspect_ratio
-                audio_channels = c_audio_channels if c_audio_channels else None,
+                ##audio_channels = c_audio_channels if c_audio_channels else None,
+                ##audio_codec = c_audio_codec if c_audio_codec else None,
+                ##video_codec = c_video_codec if c_video_codec else None,
+                ##video_resolution = c_video_resolution if c_video_resolution else None,
+                ##container = c_container if c_container else None,
+                #video_frame_rate
+                ##duration = c_duration if c_duration else None,
+                ##width = c_width if c_width else None,
+                ##height = c_height if c_height else None,
+                ##protocol = c_protocol if c_protocol else None,
+                ##optimized_for_streaming = optimized_for_streaming
                 audio_codec = c_audio_codec if c_audio_codec else None,
                 video_codec = c_video_codec if c_video_codec else None,
-                video_resolution = c_video_resolution if c_video_resolution else None,
                 container = c_container if c_container else None,
-                #video_frame_rate
-                duration = c_duration if c_duration else None,
-                width = c_width if c_width else None,
-                height = c_height if c_height else None,
                 protocol = c_protocol if c_protocol else None,
+                video_resolution = '1080',
+                height = 1080,
+                width = 1920,
+                audio_channels = 2,
                 optimized_for_streaming = optimized_for_streaming
             )
         ]
@@ -339,7 +348,7 @@ def PlayVideo(url, c_user_agent = None, c_referer = None):
 
 ####################################################################################################
 @route(PREFIX + '/reloadplaylist')
-def ReloadPlaylist():
+def ReloadPlaylist(**kwargs):
 
     if Dict['playlist_loading_in_progress']:
         return ObjectContainer(
@@ -365,7 +374,7 @@ def ReloadPlaylist():
 
 ####################################################################################################
 @route(PREFIX + '/reloadguide')
-def ReloadGuide():
+def ReloadGuide(**kwargs):
 
     if Dict['guide_loading_in_progress']:
         return ObjectContainer(
